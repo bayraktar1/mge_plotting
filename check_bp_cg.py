@@ -2,6 +2,7 @@ from Bio import SeqIO
 from Bio.SeqUtils import gc_fraction
 from pathlib import Path
 import re
+import sys
 
 
 def get_size_gc(input_file):
@@ -41,12 +42,12 @@ def find_fasta_files(directory_path):
 
 
 if __name__ == "__main__":
-    fastafiles = find_fasta_files('test_cg')
+    fastafiles = find_fasta_files(sys.argv[0])
     data = []
     for path in fastafiles:
         data.append(get_size_gc(path))
 
-    with open('test_cg/bp_cg.results', 'w') as file:
+    with open('bp_cg.results', 'w') as file:
         file.write(f'Plasmid\tSeqLen\tCG\tAccession\tfile\n')
         for row in data:
             file.write(f'{'\t'.join(str(part) for part in row)}\n')
